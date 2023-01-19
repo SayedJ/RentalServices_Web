@@ -1,23 +1,91 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@model RSMVC.Models.ApplicationUser
 @{
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
 }
 
-@model RSMVC.Models.Item
-@{ Layout = "_Layout"; ViewBag.Title = "Add File";}
-  
-<h2>Add File</h2>
-<a asp-action="Index" class="btn btn-sm btn-primary">Back</a>
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <div class="text-center panel-body">
-        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+<form asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="All" class="tex-danger">
     </div>
+    <div class="row" style=" margin: 20px;">
+        <div class="col-md-10">
+
+
+            <input asp-for="Id" type="hidden" name="id" />
+
+            <input type="hidden" name="retunUrl" value="@ViewBag.ReturnUrl" />
+
+
+            <input asp-for="Roles" type="hidden" value="user" name="roles" />
+
+
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" style=" margin: 20px;">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row " style=" margin: 20px;">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="MobileNo"></label>
+                <input asp-for="MobileNo" class="form-control" />
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row " style=" margin: 20px;">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+
+
+        <input type="submit" value="Submit" class="btn btn-primary" asp-route-returnUrl="@ViewBag.ReturnUrl">
+
+
+
+
+
+    </div>
+
 </form>
-  
-@if (Model != null)
-{
-    <h2>Uploaded File</h2>
-   
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
+

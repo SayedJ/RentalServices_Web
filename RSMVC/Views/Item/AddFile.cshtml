@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model RSMVC.Models.ApplicationUser
+@{ Layout = "_Layout"; ViewBag.Title = "Register";}
+  
+<h2>Regiser</h2>
+<a asp-action="Register" class="btn btn-sm btn-primary">Back</a>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <div class="text-center panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+    </div>
+</form>
+  
+

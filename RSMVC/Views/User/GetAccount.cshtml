@@ -1,0 +1,36 @@
+﻿@model ApplicationUser
+
+@{
+
+}
+
+<style>
+    .body{
+        height: 100%;
+    }
+</style>
+
+@if (User.Identity.IsAuthenticated)
+    {
+
+<body>
+    @if (Model != null)
+        {
+        <div class="row">
+            <div class="col-md-6 offset-md-2">
+                
+            </div>
+        </div>
+
+        <h1>
+            @Model.LastName
+            @Model.FirstName
+            @Model.MobileNo
+        </h1>
+        <div>
+
+        </div>
+        }
+    </body>
+
+    }

@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace RentalServicesWebApi.Models
 {
@@ -7,17 +11,40 @@ namespace RentalServicesWebApi.Models
         [Key]
         public int Id { get; set; }
         
-        [Required]
-        [Display(Name = "Items Name")]
+        
+        
         public string? Name { get; set; }
 
         public decimal? Price { get; set; }
-       
-        [Required]
-        public string ImagePath { get; set; }
+
+        public int Category_id { get; set; }
+        [ForeignKey("Category_id")]
+        public virtual Category? Category { get; set; }
+
         
-        [Required]
-        [Display(Name = "Choose a Category")]
-        public virtual List<Category>? Category { get; set; }
+        public virtual Availability? Availability { get; set; }
+
+        
+        public string? Description { get; set; }
+
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MMM-yyyy}")]
+        public DateTime BoughtDate { get; set; }
+
+     
+        public virtual Condition? ItemCondition { get; set; }
+
+        public string? Brand { get; set; }
+        
+
+        public virtual ICollection<BookingSystem>? BookingSystem { get; set; }
+
+
     }
+
+   
+
+    
+   
 }

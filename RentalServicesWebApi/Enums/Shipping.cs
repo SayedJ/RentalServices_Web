@@ -1,23 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalServicesWebApi.Models
 {
-    public class CollectingMethod
+    public enum Shipping
     {
-        [Key]
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
-        public Collecting MeansOfCollection { get; set; }
-
-        public DateTime MeetingTime { get; set; }
-    }
-
-    public enum Collecting
-    {
-
-        Delivery,
-        PickUp,
+        Pickup,
+        Self_Delivery,
         Post
 
     }
+
+ 
 }

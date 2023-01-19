@@ -1,57 +1,115 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RentalServicesWebApi.Configuratioins;
 using RentalServicesWebApi.Models;
 using RentalServicesWebApi.Repository;
 
 namespace RentalServicesWebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/")]
     public class UserController : ControllerBase
     {
+        
+        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        public BasicAuthenticationHandler handler;
+
+
         private readonly IUnitOfWork _unitOfWork;
+            private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserController(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+            private readonly UserManager<ApplicationUser> _userManager;
+            private readonly SignInManager<ApplicationUser> _signInManager;
+            private readonly ILogger<AccountController> _logger;
+            private readonly IMapper _mapper;
+            private readonly IConfiguration _configuration;
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var user = await _unitOfWork.Users.GetAll();
-            return Ok(user);
-        }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser([FromRoute] int id)
-        {
-            var user = _unitOfWork.Users.Get(id);
-            if (user == null)
-                return NotFound();
-            return Ok(user);
-        }
+            public UserController(UserManager<ApplicationUser> userManager,
 
-        [HttpPost]
-        public async Task<IActionResult> createUser([FromBody] User user)
-        {
-            if (ModelState.IsValid)
+                ILogger<AccountController> logger,
+                IMapper mapper,
+                IUnitOfWork unitOfWork,
+                IWebHostEnvironment environment,
+                SignInManager<ApplicationUser> signInManager,
+                IConfiguration configuration
+
+                )
             {
-                await _unitOfWork.Users.Add(user);
-                await _unitOfWork.CompleteAsync();
-                return CreatedAtAction("GetUser", new {user.Id}, user);
+                _userManager = userManager;
+
+                _logger = logger;
+                _mapper = mapper;
+                _unitOfWork = unitOfWork;
+                webHostEnvironment = environment;
+                _signInManager = signInManager;
+                _configuration = configuration;
             }
 
-            return new JsonResult("Something went wrong") {StatusCode = 500};
+
+            [Authorize(AuthenticationSchemes = "BasicAuthentication")]
+            [HttpGet]
+            [Route("users")]
+            public async Task<IEnumerable<ApplicationUser>> AllUsers()
+            {
+                   
+            try
+                {
+                
+                    var users =  _userManager.Users.ToListAsync();
+                    return await users;
+
+                }
+
+
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Something Went Wrong in the {nameof(AllUsers)}");
+                return (IEnumerable<ApplicationUser>)Unauthorized();
+
+                }
+
+            }
+
+            [HttpGet]
+            [Route("getuser/{email=unnamed}")]
+            public ActionResult<ApplicationUser> GetUser(string email)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(email))
+                        return BadRequest("Value must be passed in the request body.");
+                    var user = _userManager.Users.FirstOrDefault(s => s.Email == email);
+
+                    return Ok(user);
+
+                }
+
+
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Something Went Wrong in the {nameof(AllUsers)}");
+                    return Problem($"Something Went Wrong in the {nameof(AllUsers)}", statusCode: 500);
+
+                }
+
+            }
+
+
+
+
+
+           
+
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _unitOfWork.Users.Get(id);
-            if (user == null)
-                return BadRequest();
-            await _unitOfWork.Users.Remove(id);
-            await _unitOfWork.CompleteAsync();
-            return Ok(user);
-        }
 
 
     }
-}
+

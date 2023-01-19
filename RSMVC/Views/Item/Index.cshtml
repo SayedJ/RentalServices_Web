@@ -1,0 +1,101 @@
+﻿@model IEnumerable<RSMVC.Models.Item>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "All Items";
+
+
+
+}
+
+
+<div class="w3-display-container w3-container">
+
+    <div class="w3-display-topleft w3-text-black" style="padding:24px 48px">
+        <h1 class="w3-jumbo w3-hide-small">Today's Pick</h1>
+        <h1 class="w3-hide-large w3-hide-medium" margin="25px"></h1>
+    
+        <p><a href="#jeans" class="w3-button w3-black w3-padding-large w3-large">RENT NOW</a></p>
+    </div>
+</div>
+<div style="padding: 50px; background-color: #BCC6CC;"></div>
+<div style="padding: 50px; background-color: #E5E4E2;"></div>
+<!--
+<div>
+    <img src="/lib/Rent it .png" alt="imagelogo" style="width:95%">
+</div> -->
+
+<div class="w3-container w3-text-grey" id="jeans">
+    <p>Items</p>
+</div>
+<div class="w3-container w3-text-grey" >
+    <a asp-action="Register" asp-controller="Account" > <b>Register</b></a>
+</div>
+<div class="w3-container w3-text-grey">
+    <a asp-action="AllUsers" asp-controller="User"> <b>Users</b></a>
+</div>
+
+
+
+
+
+
+<div class="w3-row w3-grayscale">
+    @foreach (var r in Model)
+        {
+        <div class="w3-col l3 s6">
+            <div class="w3-container"> 
+                <img src="/w3images/jeans1.jpg" style="width:100%">
+                <p><a asp-action="Details" asp-controller="Item" asp-route-Id="@r.Id">@r.Name</a><br><b>@r.Price / day</b></p>
+            </div>
+         </div>
+        }
+    </div>
+        
+
+   @*<table class="table table-sm table-striped table-bordered m-2">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Namesdfd</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Image</th>
+                <th>Availability</th>
+                <th>Bought Date</th>
+                <th>Condition</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.Id</td>
+                    <td><a asp-action="Details" asp-controller="Item" asp-route-Id="@r.Id">@r.Name</a></td>
+                    <td>@r.Price</td>
+                    <td>@Html.Partial("DisplayTemplates/Category", r.Category)</td>
+                    <td>@r.Brand</td>
+                    <td>@r.ImagePath</td>
+                    <td>@r.Availability</td>
+                    <td>@r.BoughtDate</td>
+                    <td>@r.ItemCondition</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@r.Id">Details</a>
+
+                    </td>
+                    <td>
+                        <form asp.action="DeleteItem" method="post">
+                            <input type="hidden" value="@r.Id" name="ItemId" />
+                            <input type="image" src="/icon/close.png" />
+                        </form>
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>*@
+

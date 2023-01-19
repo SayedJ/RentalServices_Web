@@ -1,0 +1,166 @@
+﻿@model RentalInfoSystem
+
+@{ Layout = "_Layout";
+    var userdata = (UserDto)TempData["mydata"];
+}
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: left;
+        font-family: arial;
+        margin-top: 50px;
+    }
+    .card2 {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        margin: auto;
+        text-align: left;
+        font-family: arial;
+        margin-top: 50px;
+        margin-left: 20px;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+
+    button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        margin: 10px;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+        
+        
+    }
+
+    #texts {
+        font-size: 12px;
+        text-align: center;
+        background-color: dodgerblue;
+        color: white;
+        padding: 10px 0 10px 0;
+    }
+
+    button:hover, a:hover {
+        opacity: 0.7;
+    }
+</style>
+
+@*<h2>Rent an Item <a asp-action="Index" class="btn btn-sm btn-secondary">Back</a></h2>*@
+
+
+
+
+
+@if (Model != null)
+    {
+<div class="w3-col">
+    <div class="w3-col w3-center w3-margin-top w3-padding-top">
+        <h5 class="w3-monospace"><b> </b></h5>
+    </div>
+    <div class=" card w3-col w3-margin-top">
+
+        <div class="w3-onethird w3-left">
+            <a href="@Url.Action("Details", "Item", new { id = Model.Item.Id }, null)">
+                <img src="/lib/hpomen.png" width="100%" height="auto" alt="@Model.Item.Name">
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h1 id="texts">@Model.Item.Brand</h1>
+            </div>
+            <div class="col-md-6">
+                <h1 id="texts">@Model.Item.Name</h1>
+            </div>
+            <div class="col-md-6">
+                <h1 id="texts">@Model.Item.BoughtDate.Year</h1>
+            </div>
+            <div class="col-md-6">
+                <h1 id="texts">@Model.Item.Price / day </h1>
+            </div>
+
+        </div>
+    </div>
+    <div class="card2 w3-col w3-margin-top">
+        <div class="row">
+            <div class="col-md-8" style="padding-left: 5px;">
+                
+                   <h3>Dear @userdata.FirstName @userdata.LastName</h3>
+                <p>You are about to book @Model.Item.Name</p>
+            </div>
+            <div class="col-md-2">
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="w3-row">
+        <div class="w3-col w3-margin-top" style="width:190px">
+
+            <ul class="w3-ul">
+                <li><b>Brand:</b></li>
+                <li><b>Purchased Date:</b> </li>
+                <li><b>Condition:</b></li>
+                <li><b>Category:</b> </li>
+                <li><b>Description:</b></li>
+            </ul>
+            <h1 class="w3-hide-large w3-hide-medium" margin="25px"> </h1>
+
+        </div>
+        <div class="w3-rest w3-margin-top">
+
+            <ul class="w3-ul">
+                <li> @Model.Item.Brand</li>
+                <li>@Model.Item.BoughtDate.Year</li>
+                <li>@Model.Item.ItemCondition</li>
+
+                @*<li>@Html.Partial("~/Views/Item/DisplayTemplates/CategoryModel.cshtml", Model.Item.Category)</li>*@
+                <li>@Model.Item.Description</li>
+            </ul>
+            <h1 class="w3-hide-large w3-hide-medium" margin="25px"> </h1>
+
+        </div>
+    </div>
+</div>
+
+@*<form method="post" enctype="multipart/form-data" asp-controller="RentalSystem" asp-action="RentAnItem">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for=""
+        </div>
+                <td><input type="text" id="txtFirstName" name="FirstName"/></td>
+            </tr>
+            <tr>
+                <td>Do you accept the terms? </td>
+                <td><input type= "checkbox" id="terms" name="terms"/></td>
+            </tr>
+            @foreach (var m in System.Enum.GetValues(typeof(Shipping)))
+            {
+                <tr>
+                    <label asp-for="Collecting">@m</label>
+                    <input type="radio" asp-for="Collecting" value="@((int)m)" />
+                </tr>
+            }
+
+
+        <hr/>
+        @ViewBag.Name
+    </form>*@
+
+    }

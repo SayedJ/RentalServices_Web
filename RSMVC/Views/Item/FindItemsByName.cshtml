@@ -1,0 +1,40 @@
+﻿@model IEnumerable<RSMVC.Models.Item>
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<h2>Get Item <a asp-action="Index" class="btn btn-sm btn-primary">Back</a></h2>
+<h3>@ViewBag.StatusCode</h3>
+<form method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input class="form-control" name="name" />
+    </div>
+    <div class="text-center panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Get Item</button>
+    </div>
+</form>
+ 
+@if (Model != null)
+{
+    <h2>Item</h2>
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.Name</td>
+                <td>@r.Price</td>
+           
+            </tr>
+        }
+        </tbody>
+    </table>
+}

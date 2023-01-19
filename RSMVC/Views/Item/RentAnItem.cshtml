@@ -1,0 +1,43 @@
+﻿@model Item
+@{
+    Layout = "_Layout";
+}
+
+
+table cellpadding="2" cellspacing="2" border="1">
+<tr>
+    <th>Name</th>
+    <th>Fee Per Day</th>
+    <th>Category</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td>@Model.Name</td>
+    <td>@Model.Price</td>
+    <td>@Model.Category.Name </td>
+    <td>@Model.Description</td>
+</tr>
+
+<form method="post" enctype="multipart/form-data" asp-controller="RentalSystem" asp-action="RentAnItem">
+    <table>
+    
+        <tr>
+
+
+            <td> @Model. </td>
+            <td><input type="text" id="txtFirstName" name="FirstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name: </td>
+            <td><input type="text" id="txtLastName" name="LastName"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+        
+    </table>
+    <hr/>
+    @ViewBag.Name
+</form>
+

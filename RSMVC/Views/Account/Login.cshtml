@@ -1,0 +1,54 @@
+﻿
+@model RSMVC.Models.LoginUserDto
+@{
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="col-md-10 offset-md-1">
+    <section>
+        <div class="login-form-icon">
+            <i class="fas fa-user-circle fa-9x text-secondary"></i>
+        </div>
+
+        
+            <form asp-controller="Account" asp-action="Login">
+                <div asp-validation-summary="All" class="tex-danger">
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <input type="hidden" name="PreviousUrl" value="@ViewBag.PreviousUrl" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+
+
+                    <input type="submit" value="Login" class="btn btn-primary" asp-route-returnUrl="@ViewBag.PreviousUrl">
+
+
+
+
+
+                </div>
+
+
+            </form>
+         
+
+</section>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+   }
+
